@@ -1,0 +1,168 @@
+﻿@model IEnumerable<BOXCricket.Models.VenueModel>
+
+<header id="header" class="header d-flex align-items-center fixed-top bg-black">
+    <div class="container-fluid container-xl position-relative d-flex align-items-center justify-content-between">
+
+        <a href="index.html" class="logo d-flex align-items-center">
+            <!-- Uncomment the line below if you also wish to use an image logo -->
+            <img src="~/UserSide/assets/img/logo.png" alt="">
+            <h1 class="sitename">BOX Cricket</h1>
+        </a>
+
+        <nav id="navmenu" class="navmenu">
+            <ul>
+                <li><a asp-action="Index" asp-controller="Home" asp-area="User" >Home</a></li>
+                <li><a asp-action="AllVenues" asp-controller="Venue" asp-area="User" class="active">Venues</a></li>
+                <li><a asp-action="BookingsByUser" asp-controller="Booking" asp-area="User">Bookings</a></li>
+                <li><a asp-action="Payments" asp-controller="Payment" asp-area="User">Payments</a></li>
+                <li><a href="#portfolio">Reviews</a></li>
+                <li class="dropdown">
+                    <a href="#"><i class="bi bi-person-circle fs-4"></i></a>
+                    <ul>
+                        <li><a asp-controller="Home" asp-action="Profile" asp-area="User" class="fs-9">Profile</a></li>
+                        <li><a asp-controller="Auth" asp-action="Logout" asp-area="Authentication" class=" btn btn-get-started">Logout</a></li>
+                    </ul>
+                </li>
+            </ul>
+            <i class="mobile-nav-toggle d-xl-none bi bi-list"></i>
+        </nav>
+
+
+    </div>
+</header>
+
+
+<main class="main mt-5">
+    <section id="AllVenues">
+        <div class="container-fluid mt-4">
+                    <div class="row mx-3">
+                        @foreach (var item in Model)
+                        {
+                            <div class="col-md-3">
+                                <div class="card">
+                                    @if (item.Images != null && item.Images.Count > 0)
+                                    {
+                                        <img src=@item.Images[0].Photo class="card-img-top" alt="Venue Image">
+                                    }
+                                    else
+                                    {
+                                        <img src="~/assets/images/products/s4.jpg" class="card-img-top" alt="Default Venue">
+                                    }
+                                    <div class="card-body text-center">
+                                        <h5 class="card-title">@Html.DisplayFor(modelItem => item.Name)</h5>
+                                        <p class="card-text" style="display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden;">
+                                            @Html.DisplayFor(modelItem => item.Description)
+                                        </p>
+                                        <a asp-action="VenueDetail" asp-route-venueId="@item.VenueId" class="btn btn-primary">
+                                            <i class="bi bi-eye"></i> Detail
+                                        </a>
+                                        <a asp-action="BookingByVenue" asp-controller="Booking" asp-route-venueId="@item.VenueId" class="btn btn-secondary">
+                                            <i class="bi bi-calendar-check"></i> See Booking
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        }
+                    </div>
+                </div>
+            
+    </section>
+</main>
+
+@section scripts{
+    <style>
+        #AllVenues {
+            padding: 2rem 0;
+            background-color: #f4f4f4; /* Light gray background */
+        }
+
+            #AllVenues .card {
+                margin: 1rem 0;
+                border: none;
+                border-radius: 12px;
+                background-color: #ffffff; /* White card background */
+                box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+                transition: transform 0.3s ease, box-shadow 0.3s ease;
+            }
+
+                #AllVenues .card:hover {
+                    transform: translateY(-10px);
+                    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15);
+                    background-color: #f0f9ff;
+
+                }
+
+            #AllVenues .card-img-top {
+                border-top-left-radius: 12px;
+                border-top-right-radius: 12px;
+                height: 200px;
+                object-fit: cover;
+            }
+
+            #AllVenues .card-title {
+                font-size: 1.25rem;
+                font-weight: bold;
+                margin-bottom: 0.75rem;
+                color: #333333; /* Dark gray title */
+            }
+
+            #AllVenues .card-text {
+                font-size: 0.9rem;
+                color: #555555; /* Medium gray text */
+                overflow: hidden;
+                display: -webkit-box;
+                -webkit-line-clamp: 3;
+                -webkit-box-orient: vertical;
+            }
+
+            #AllVenues .btn {
+                margin-top: 0.5rem;
+                border-radius: 8px;
+                font-size: 0.85rem;
+                padding: 0.5rem 1rem;
+                display: inline-flex;
+                align-items: center;
+                gap: 0.5rem;
+            }
+
+            /* Primary Button */
+            #AllVenues .btn-primary {
+                background-color: #007bff; /* Blue */
+                border-color: #007bff;
+                color: #fff;
+            }
+
+                #AllVenues .btn-primary:hover {
+                    background-color: #0056b3;
+                    border-color: #0056b3;
+                    transform: scale(0.95); /* Slight zoom effect */
+                    cursor: pointer; /* Pointer cursor */
+                }
+
+            /* Secondary Button */
+            #AllVenues .btn-secondary {
+                background-color: #28a745; /* Green */
+                border-color: #28a745;
+                color: #fff;
+            }
+
+                #AllVenues .btn-secondary:hover {   
+                    background-color: #218838;
+                    border-color: #218838;
+                    transform: scale(0.95); /* Slight zoom effect */
+                    cursor: pointer; /* Pointer cursor */
+                }
+
+            /* Icon Styling */
+            #AllVenues .btn i {
+                font-size: 1rem;
+                transition: transform 0.3s ease;
+            }
+
+            #AllVenues .btn:hover i {
+                transform: rotate(180deg); /* Rotate icon slightly on hover */
+            }
+    </style>
+
+
+}

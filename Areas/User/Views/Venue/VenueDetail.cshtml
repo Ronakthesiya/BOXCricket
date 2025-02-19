@@ -1,0 +1,271 @@
+﻿@model VenueModel
+
+<header id="header" class="header d-flex align-items-center fixed-top bg-black">
+    <div class="container-fluid container-xl position-relative d-flex align-items-center justify-content-between">
+
+        <a href="index.html" class="logo d-flex align-items-center">
+            <!-- Uncomment the line below if you also wish to use an image logo -->
+            <img src="~/UserSide/assets/img/logo.png" alt="">
+            <h1 class="sitename">BOX Cricket</h1>
+        </a>
+
+        <nav id="navmenu" class="navmenu">
+            <ul>
+                <li><a asp-action="Index" asp-controller="Home" asp-area="User">Home</a></li>
+                <li><a asp-action="AllVenues" asp-controller="Venue" asp-area="User" class="active">Venues</a></li>
+                <li><a asp-action="BookingsByUser" asp-controller="Booking" asp-area="User">Bookings</a></li>
+                <li><a asp-action="Payments" asp-controller="Payment" asp-area="User">Payments</a></li>
+                <li><a href="#portfolio">Reviews</a></li>
+                <li class="dropdown">
+                    <a href="#"><i class="bi bi-person-circle fs-4"></i></a>
+                    <ul>
+                        <li><a asp-controller="Home" asp-action="Profile" asp-area="User" class="fs-9">Profile</a></li>
+                        <li><a asp-controller="Auth" asp-action="Logout" asp-area="Authentication" class=" btn btn-get-started">Logout</a></li>
+                    </ul>
+                </li>
+            </ul>
+            <i class="mobile-nav-toggle d-xl-none bi bi-list"></i>
+        </nav>
+
+
+    </div>
+</header>
+
+
+<main class="main mt-5">
+
+    <section id="AllVenues">
+        <div class="container mt-3">
+            <h1>@Html.DisplayFor(model => model.Name)</h1>
+            <div class="row align-items-center venue-details">
+                <!-- Left Side: Details as Table -->
+                <div class="col-md-6">
+                    <table class="table table-bordered details-table">
+                        <thead>
+                            <tr>
+                                <th colspan="2" class="table-header">Venue Information</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <th>@Html.DisplayNameFor(model => model.Description)</th>
+                                <td>@Html.DisplayFor(model => model.Description)</td>
+                            </tr>
+                            <tr>
+                                <th>@Html.DisplayNameFor(model => model.Capacity)</th>
+                                <td>@Html.DisplayFor(model => model.Capacity)</td>
+                            </tr>
+                            <tr>
+                                <th>@Html.DisplayNameFor(model => model.PricePerHour)</th>
+                                <td>@Html.DisplayFor(model => model.PricePerHour)</td>
+                            </tr>
+                            <tr>
+                                <th>@Html.DisplayNameFor(model => model.Location)</th>
+                                <td>@Html.DisplayFor(model => model.Location)</td>
+                            </tr>
+                            <tr>
+                                <th>@Html.DisplayNameFor(model => model.City)</th>
+                                <td>@Html.DisplayFor(model => model.City)</td>
+                            </tr>
+                            <tr>
+                                <th>@Html.DisplayNameFor(model => model.State)</th>
+                                <td>@Html.DisplayFor(model => model.State)</td>
+                            </tr>
+                            <tr>
+                                <th>@Html.DisplayNameFor(model => model.LocationLink)</th>
+                                <td>
+                                    @if (!string.IsNullOrEmpty(Model.LocationLink))
+                                    {
+                                        <a href="@Model.LocationLink" target="_blank" class="btn">View on Map</a>
+                                    }
+                                    else
+                                    {
+                                        <span>No Location Link</span>
+                                    }
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <!-- Right Side: Image -->
+                <div class="col-md-6 text-center">
+                    @if (Model.Images != null && Model.Images.Count > 0)
+                    {
+                        <img src="@Model.Images[0].Photo" alt="Venue Image" class="img-fluid venue-image" />
+                    }
+                    else
+                    {
+                        <span>No Image Available</span>
+                    }
+
+                    <div class="text-center mt-4">
+                        <a asp-action="BookingByVenue" asp-controller="Booking" asp-route-venueId="@Model.VenueId" class="btn btn-primary">
+                            <i class="bi bi-calendar-check"></i> See Booking
+                        </a>
+                            
+                        <a class="btn btn-secondary" asp-action="AllVenues">
+                            <i class="bi bi-arrow-left"></i> Back
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            
+        </div>
+    </section>
+
+
+
+</main>
+
+@section scripts {
+     <style>
+     /* General Styling for Section */
+     #AllVenues {
+         padding: 3rem 1.5rem;
+         background: linear-gradient(135deg, #f9f9f9, #ffffff);
+         font-family: 'Roboto', Arial, sans-serif;
+     }
+
+     /* Heading Styling */
+     #AllVenues h1 {
+         text-align: center;
+         font-size: 2.5rem;
+         font-weight: bold;
+         color: #333;
+         margin-bottom: 2rem;
+         text-transform: uppercase;
+         letter-spacing: 1px;
+     }
+
+     /* Table Styling */
+        .details-table {
+            background: #ffffff; /* Neutral white background */
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+            border: 1px solid #dee2e6; /* Light border for structure */
+        }
+
+            .details-table th {
+                background: #f8f9fa; /* Light gray for the header */
+                color: #495057; /* Dark gray text for better contrast */
+                font-weight: bold;
+                text-transform: uppercase;
+                font-size: 0.95rem;
+                border-bottom: 2px solid #dee2e6; /* Accent divider */
+            }
+
+            .details-table td {
+                background-color: #ffffff; /* White cells for a clean look */
+                color: #343a40; /* Professional dark text */
+                border-bottom: 1px solid #dee2e6; /* Light borders between rows */
+            }
+
+            .details-table tr:nth-child(even) td {
+                background-color: #f9f9f9; /* Alternating light gray for even rows */
+            }
+
+            .details-table tr:hover td {
+                background-color: #f1f5f9; /* Soft blue-gray hover effect */
+                transition: background-color 0.3s ease-in-out;
+            }
+
+        .table-header {
+            text-align: center;
+            font-size: 1.2rem;
+            font-weight: bold;
+            background: #343a40; /* Dark gray for a professional look */
+            color: #ffffff; /* White text for contrast */
+            padding: 1rem;
+            letter-spacing: 0.5px;
+        }
+
+     /* Image Styling */
+     
+
+        .venue-image {
+            width: 100%; /* Make the image responsive to its container */
+            max-width: 500px; /* Limit the maximum width */
+            height: auto; /* Maintain aspect ratio */
+            border-radius: 12px; /* Rounded corners for a polished look */
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15); /* Add shadow for depth */
+            transition: transform 0.3s ease, box-shadow 0.3s ease; /* Smooth hover effect */
+        }
+
+        .venue-image:hover {
+            transform: scale(1.05); /* Slight zoom on hover */
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2); /* Enhance shadow on hover */
+        }
+
+        
+
+        
+        
+
+     /* Button Styling */
+     #AllVenues .btn {
+         font-size: 1.0  rem;
+         padding: 0.5rem 0.9rem;
+         border-radius: 12px;
+         margin: 0.5rem;
+         display: inline-flex;
+         align-items: center;
+         justify-content: center;
+         gap: 0.5rem;
+         text-transform: uppercase;
+         transition: all 0.3s ease;
+     }
+
+     #AllVenues .btn-primary {
+         background-color: #007bff;
+         color: #ffffff;
+         border: none;
+     }
+
+     #AllVenues .btn-primary:hover {
+         background-color: #0056b3;
+         transform: translateY(-3px);
+     }
+
+     #AllVenues .btn-danger {
+         background-color: #dc3545;
+         color: #ffffff;
+         border: none;
+     }
+
+     #AllVenues .btn-danger:hover {
+         background-color: #a71d2a;
+         transform: translateY(-3px);
+     }
+
+     #AllVenues .btn:last-child {
+         background-color: #6c757d;
+         color: #ffffff;
+     }
+
+     #AllVenues .btn:last-child:hover {
+         background-color: #495057;
+         transform: translateY(-3px);
+     }
+
+     /* Responsive Design */
+    /*  media (max-width: 768px) {
+         #AllVenues h1 {
+             font-size: 2rem;
+         }
+
+         #AllVenues dl {
+             padding: 1.5rem;
+         }
+
+         #AllVenues .btn {
+             font-size: 1rem;
+             padding: 0.6rem 1.4rem;
+         }
+     } */
+ </style>
+
+
+}

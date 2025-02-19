@@ -3,12 +3,14 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>@ViewData["Title"] - BOXCricket</title>
+    <title> BOXCricket</title>
+
      <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
      <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
      <link rel="stylesheet" href="~/BOXCricket.styles.css" asp-append-version="true" />
-    <link rel="shortcut icon" type="image/png" href="~/assets/images/logos/favicon.png" />
+    <link rel="shortcut icon" type="image/png" href="~/UserSide/assets/img/favicon.png" />
     <link rel="stylesheet" href="~/assets/css/styles.min.css" />
+
 </head>
 
             
@@ -31,10 +33,10 @@
                 <!-- Sidebar navigation-->
                 <nav class="sidebar-nav scroll-sidebar" data-simplebar="">
                     <ul id="sidebarnav">
-                        <li class="nav-small-cap">
+                        @* <li class="nav-small-cap">
                             <i class="ti ti-dots nav-small-cap-icon fs-4"></i>
                             <span class="hide-menu">Home</span>
-                        </li>
+                        </li> *@
                         <li class="sidebar-item">
                             <a class="sidebar-link" href="http://localhost:5253/Admin/Home/Index" aria-expanded="false">
                                 <span>
@@ -43,35 +45,38 @@
                                 <span class="hide-menu">Dashboard</span>
                             </a>
                         </li>
-                        <li class="nav-small-cap">
-                            <i class="ti ti-dots nav-small-cap-icon fs-4"></i>
-                            <span class="hide-menu">UI COMPONENTS</span>
-                        </li>
+                         <!--<li class="nav-small-cap">
+                             <i class="ti ti-dots nav-small-cap-icon fs-4"></i>
+                             <span class="hide-menu">UI COMPONENTS</span>
+                         </li>-->
                         <li class="sidebar-item">
-                            <a class="sidebar-link" href="./ui-buttons.html" aria-expanded="false">
+                            <a class="sidebar-link" href="http://localhost:5253/Admin/Venue/AllVenues" aria-expanded="false">
                                 <span>
                                     <i class="ti ti-article"></i>
                                 </span>
-                                <span class="hide-menu">Buttons</span>
+                                <span class="hide-menu">Venues</span>
                             </a>
                         </li>
+
                         <li class="sidebar-item">
-                            <a class="sidebar-link" href="./ui-alerts.html" aria-expanded="false">
+                            <a class="sidebar-link" href="http://localhost:5253/Admin/Booking/AllBooking" aria-expanded="false">
                                 <span>
                                     <i class="ti ti-alert-circle"></i>
                                 </span>
-                                <span class="hide-menu">Alerts</span>
+                                <span class="hide-menu">Booking</span>
                             </a>
                         </li>
+
                         <li class="sidebar-item">
-                            <a class="sidebar-link" href="./ui-card.html" aria-expanded="false">
+                            <a class="sidebar-link" href="http://localhost:5253/Admin/User/AllUsers" aria-expanded="false">
                                 <span>
                                     <i class="ti ti-cards"></i>
                                 </span>
-                                <span class="hide-menu">Card</span>
+                                <span class="hide-menu">Users</span>
                             </a>
                         </li>
-                        <li class="sidebar-item">
+
+                        <!--<li class="sidebar-item">
                             <a class="sidebar-link" href="./ui-forms.html" aria-expanded="false">
                                 <span>
                                     <i class="ti ti-file-description"></i>
@@ -138,7 +143,7 @@
                                 <img src="~/assets/images/backgrounds/rocket.png" alt="" class="img-fluid">
                             </div>
                         </div>
-                    </div>
+                    </div>-->
                 </nav>
                 <!-- End Sidebar navigation -->
             </div>
@@ -173,7 +178,7 @@
                                 </a>
                                 <div class="dropdown-menu dropdown-menu-end dropdown-menu-animate-up" aria-labelledby="drop2">
                                     <div class="message-body">
-                                        <a href="javascript:void(0)" class="d-flex align-items-center gap-2 dropdown-item">
+                                        <a asp-action="Profile" asp-controller="Home" asp-area="Admin" class="d-flex align-items-center gap-2 dropdown-item">
                                             <i class="ti ti-user fs-6"></i>
                                             <p class="mb-0 fs-3">My Profile</p>
                                         </a>
@@ -185,7 +190,7 @@
                                             <i class="ti ti-list-check fs-6"></i>
                                             <p class="mb-0 fs-3">My Task</p>
                                         </a>
-                                        <a href="./authentication-login.html" class="btn btn-outline-primary mx-3 mt-2 d-block">Logout</a>
+                                        <a asp-action="Logout" asp-controller="Auth" asp-area="Authentication" class="btn btn-outline-primary mx-3 mt-2 d-block">Logout</a>
                                     </div>
                                 </div>
                             </li>

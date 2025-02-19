@@ -1,0 +1,122 @@
+﻿@{
+    Layout = "_UserLayout";
+}
+
+<header id="header" class="header d-flex align-items-center fixed-top bg-black">
+    <div class="container-fluid container-xl position-relative d-flex align-items-center justify-content-between">
+
+        <a href="index.html" class="logo d-flex align-items-center">
+            <!-- Uncomment the line below if you also wish to use an image logo -->
+            <img src="~/UserSide/assets/img/logo.png" alt="">
+            <h1 class="sitename">BOX Cricket</h1>
+        </a>
+
+        <nav id="navmenu" class="navmenu">
+            <ul>
+                <li><a asp-action="Index" asp-controller="Home" asp-area="User">Home</a></li>
+                <li><a asp-action="AllVenues" asp-controller="Venue" asp-area="User">Venues</a></li>
+                <li><a asp-action="BookingsByUser" asp-controller="Booking" asp-area="User" class="active">Bookings</a></li>
+                <li><a href="#portfolio">Payments</a></li>
+                <li><a href="#portfolio">Reviews</a></li>
+                <li class="dropdown">
+                    <a href="#"><i class="bi bi-person-circle fs-4"></i></a>
+                    <ul>
+                        <li><a href="#" class="fs-9">Profile</a></li>
+                        <li><a asp-controller="Auth" asp-action="Logout" asp-area="Authentication" class=" btn btn-get-started">Logout</a></li>
+                    </ul>
+                </li>
+            </ul>
+            <i class="mobile-nav-toggle d-xl-none bi bi-list"></i>
+        </nav>
+
+
+    </div>
+</header>
+
+<script src="https://www.paypal.com/sdk/js?client-id=@(ViewBag.PaypalClientId)&currency=INR"></script>
+
+<div class="mx-auto p-4 rounded border shadow" style="width: 420px;">
+    <h2 class="text-center mb-5"> Complete your order </h2>
+    <div class="form-group mb-3">
+        <label class="form-label"> Total Amount ($) </label>
+        <input class="form-control" type="number" id="totalAmount" step="0.01"/>
+    </div>
+    <br/>
+    <div id="notification-container"></div>
+    <div id="paypal-button-container"></div>
+</div>
+
+<div class="alert alert-danger alert-dismissible fade show" role="alert">
+    <strong>Payment Canceled!</strong>
+    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+</div>
+
+
+<script>
+    paypal.Buttons({
+        async createOrder() {
+            const response = await fetch("@Url.ActionLink("CreateOrder", "Checkout", new { area = "Payment" })", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({
+                    amount: document.getElementById("totalAmount").value
+                })
+            });
+
+            const order = await response.json();
+            return order.id;
+        },
+
+        async onApprove(data) {
+            // Capture the funds from the transaction.
+            const response = await fetch("@Url.ActionLink("CompleteOrder", "Checkout", new { area = "Payment" })", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({
+                    orderID: data.orderID
+                })
+            })
+
+            const details = await response.json();
+
+            // Show success message to buyer
+            if (details == "success") {
+                document.getElementById("notification-container").innerHTML = `
+                        <div class="alert alert-success alert-dismissible fade show" role="alert">
+                            <strong>Payment Successful! Your order is confirmed.</strong>
+                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                        </div>
+                    `;
+            } else {
+                document.getElementById("notification-container").innerHTML = `
+                        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                            <strong>Payment failed. Please try again.</strong>
+                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                        </div>
+                    `;
+            }
+        },
+
+        onCancel(data) {
+            document.getElementById("notification-container").innerHTML = `
+                <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                    <strong>Payment Canceled!</strong>
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+            `;
+        },
+
+        onError(err){
+            document.getElementById("notification-container").innerHTML = `
+                    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                        <strong>An error occured! please retry later.</strong>
+                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                    </div>
+                `;
+        }
+    }).render('#paypal-button-container');
+</script>

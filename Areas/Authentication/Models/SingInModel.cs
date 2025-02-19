@@ -6,11 +6,11 @@ namespace BOXCricket.Areas.Authentication.Models
     {
         [Required]
         public string Name { get; set; }
-        [Required]
 
+        [Required]
         public string Email { get; set; }
-        [Required]
 
+        [Required]
         public string Password { get; set; }
     }
 }

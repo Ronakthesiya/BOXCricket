@@ -2,6 +2,7 @@
 using Newtonsoft.Json;
 using System.Text;
 using System.Net.Http.Headers;
+using NuGet.Common;
 
 
 namespace BOXCricket.Services
@@ -9,12 +10,11 @@ namespace BOXCricket.Services
     public class ApiClientService
     {
         private readonly HttpClient _httpClient;
-
-        public ApiClientService(HttpClient httpClient)
+        private readonly IHttpContextAccessor _httpContextAccessor;
+        public ApiClientService(HttpClient httpClient,IHttpContextAccessor httpContextAccessor)
         {
-           
-
             _httpClient = httpClient;
+            _httpContextAccessor = httpContextAccessor;
         }
 
         #region Common GetAsync 
@@ -22,6 +22,9 @@ namespace BOXCricket.Services
         {
             try
             {
+                var token = _httpContextAccessor.HttpContext.Request.Cookies["token"];
+                _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
+
                 var response = await _httpClient.GetAsync(endpoint);
                 var responseContent = await response.Content.ReadAsStringAsync();
 

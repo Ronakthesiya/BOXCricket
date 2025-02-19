@@ -1,19 +1,153 @@
-﻿<form>
+﻿@model SignUpModel
+@* 
+<form method="post" asp-action="Ragister" asp-controller="Auth">
     <div class="mb-3">
-        <label for="exampleInputtext1" class="form-label">Name</label>
-        <input type="text" class="form-control" id="exampleInputtext1" aria-describedby="textHelp">
+        <label asp-for="Name" class="form-label">Username</label>
+        <input asp-for="Name" type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
+        <span asp-validation-for="Name" class="text-danger small"></span>
     </div>
+
     <div class="mb-3">
-        <label for="exampleInputEmail1" class="form-label">Email Address</label>
-        <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
+        <label asp-for="Email" class="form-label">Email</label>
+        <input asp-for="Email" type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
+        <span asp-validation-for="Email" class="text-danger small"></span>
+
     </div>
+
     <div class="mb-4">
-        <label for="exampleInputPassword1" class="form-label">Password</label>
-        <input type="password" class="form-control" id="exampleInputPassword1">
+        <label asp-for="Password" class="form-label">Password</label>
+        <input asp-for="Password" type="password" class="form-control" id="exampleInputPassword1">
+        <span asp-validation-for="Password" class="text-danger small"></span>
+
     </div>
-    <a href="./index.html" class="btn btn-primary w-100 py-8 fs-4 mb-4 rounded-2">Sign Up</a>
+    <button type="submit" class="btn btn-primary w-100 py-8 fs-4 mb-4 rounded-2">Sign Up</button>
     <div class="d-flex align-items-center justify-content-center">
         <p class="fs-4 mb-0 fw-bold">Already have an Account?</p>
         <a class="text-primary fw-bold ms-2" asp-action="SignIn">Sign In</a>
     </div>
-</form>
+</form> *@
+
+
+<div class="form-container">
+    <form method="post" asp-action="Ragister" asp-controller="Auth">
+        <div class="mb-3">
+            <label asp-for="Name" class="form-label">Username</label>
+            <input asp-for="Name" type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
+            <span asp-validation-for="Name" class="text-danger small"></span>
+        </div>
+
+        <div class="mb-3">
+            <label asp-for="Email" class="form-label">Email</label>
+            <input asp-for="Email" type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
+            <span asp-validation-for="Email" class="text-danger small"></span>
+
+        </div>
+
+        <div class="mb-4">
+            <label asp-for="Password" class="form-label">Password</label>
+            <input asp-for="Password" type="password" class="form-control" id="exampleInputPassword1">
+            <span asp-validation-for="Password" class="text-danger small"></span>
+        </div>
+
+        <div class="d-flex align-items-center justify-content-between mb-4">
+            <div class="form-check">
+                <input class="form-check-input primary" type="checkbox" value="" id="flexCheckChecked" checked>
+                <label class="form-check-label text-dark" for="flexCheckChecked">
+                    Remember this Device
+                </label>
+            </div>
+            <a class="text-primary fw-bold" href="./index.html">Forgot Password?</a>
+        </div>
+
+        <button type="submit" class="btn btn-primary w-100 py-8 fs-4 mb-4 rounded-2">Sign Up</button>
+
+        <div class="d-flex align-items-center justify-content-center">
+            <a class="text-primary fw-bold ms-2" asp-action="SignIn">Already have an Account?</a>
+        </div>
+    </form>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+
+    <style>
+        /* Fullscreen Background with Dark Filter */
+        body {
+            margin: 0;
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: url('../../UserSide/assets/img/hero-carousel/GroundImage.jpg') no-repeat center center fixed;
+            background-size: cover;
+        }
+
+        /* Dark overlay */
+        .form-container {
+            position: relative;
+            width: 100%;
+            max-width: 450px;
+            background: rgba(0, 0, 0, 0.7); /* Dark overlay */
+            border-radius: 10px;
+            padding: 30px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+        }
+
+            /* Form Styling */
+            .form-container .form-label {
+                color: #fff;
+                font-size: 16px;
+                font-weight: 600;
+            }
+
+            .form-container .form-control {
+                background-color: rgba(255, 255, 255, 0.1);
+                border: 1px solid #444;
+                color: #fff;
+                font-size: 16px;
+                border-radius: 5px;
+                padding: 10px;
+                margin-bottom: 15px;
+            }
+
+                .form-container .form-control:focus {
+                    border-color: #00bcd4;
+                    box-shadow: 0 0 5px rgba(0, 188, 212, 0.6);
+                }
+
+            .form-container .form-check-label {
+                color: #fff;
+                font-size: 14px;
+            }
+
+            .form-container .btn-primary {
+                background-color: #00bcd4;
+                border-color: #00bcd4;
+                font-size: 18px;
+                padding: 12px 20px;
+                width: 100%;
+                border-radius: 5px;
+            }
+
+                .form-container .btn-primary:hover {
+                    background-color: #0097a7;
+                    border-color: #0097a7;
+                }
+
+            .form-container .text-primary {
+                color: #00bcd4 !important;
+            }
+
+            .form-container .text-dark {
+                color: #ddd !important;
+            }
+
+            .form-container .fs-4 {
+                font-size: 18px;
+            }
+
+        /* Responsive Design */
+
+    </style>
+
+}

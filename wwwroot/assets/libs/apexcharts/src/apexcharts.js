@@ -13,7 +13,7 @@ import YAxis from './modules/axes/YAxis'
 import InitCtxVariables from './modules/helpers/InitCtxVariables'
 import Destroy from './modules/helpers/Destroy'
 import { addResizeListener, removeResizeListener } from './utils/Resize'
-import apexCSS from './assets/apexcharts.css'
+import apexCSS from './~/UserSide/~/UserSide/assets/apexcharts.css'
 
 /**
  *

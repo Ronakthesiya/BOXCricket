@@ -1,4 +1,8 @@
+
+using BOXCricket.Repository;
 using BOXCricket.Services;
+using Microsoft.EntityFrameworkCore;
+using System.Net.Http.Headers;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -8,13 +12,19 @@ builder.Services.AddControllersWithViews();
 builder.Services.AddHttpClient<ApiClientService>(client =>
 {
     client.BaseAddress = new Uri(builder.Configuration["ApiSettings:BaseUrl"]!); // Common Base URL for all tables/services
-    new HttpClientHandler
-    {
-        ServerCertificateCustomValidationCallback = (message, cert, chain, sslPolicyErrors) => true
-    };
+    
 });
 
 builder.Services.AddHttpContextAccessor();
+
+builder.Services.AddDistributedMemoryCache();
+
+builder.Services.AddSession(options =>
+{
+    options.IdleTimeout = TimeSpan.FromDays(1);
+    options.Cookie.HttpOnly = false;
+    options.Cookie.IsEssential = true;
+});
 
 builder.Services.AddCors(options =>
 {
@@ -43,13 +53,18 @@ app.UseHttpsRedirection();
 app.UseStaticFiles();
 
 app.UseRouting();
+app.UseSession();
 
 app.UseAuthorization();
 
 app.MapControllerRoute(
-    name: "default",
+    name: "areas",
     //pattern: "{area=Admin}/{controller=Home}/{action=Index}/{id?}");
-    pattern: "{area=Authentication}/{controller=Auth}/{action=SignIn}/{id?}");
+//pattern: "{area=Authentication}/{controller=Auth}/{action=SignIn}/{id?}");
+pattern: "{area=Authentication}/{controller=Home}/{action=Index}/{id?}");
+//pattern: "{area=Payment}/{controller=Checkout}/{action=Index}/{id?}");
+
+//pattern: "{area=User}/{controller=Home}/{action=Index}/{id?}");
 
 
 app.Run();

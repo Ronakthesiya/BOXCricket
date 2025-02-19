@@ -1,0 +1,146 @@
+﻿
+
+@model BOXCricket.Models.VenueModel
+
+@{
+    ViewData["Title"] = "VenueAddEdit";
+}
+
+<div class="container mt-5">
+    <div class="card shadow">
+        <div class="card-body">
+            <!-- Title Section -->
+            @if (Model.VenueId >= 1)
+            {
+                <h2 class="text-center text-primary">Edit Venue</h2>
+            }
+            else
+            {
+                <h2 class="text-center text-primary">Add Venue</h2>
+            }
+            <hr />
+
+            <!-- Form Start -->
+            <form asp-action="VenueAddEdit" method="post" enctype="multipart/form-data">
+                <div asp-validation-summary="ModelOnly" class="alert alert-danger"></div>
+
+                <!-- Hidden Fields -->
+                <input asp-for="AdminId" hidden />
+                <input asp-for="VenueId" hidden />
+
+
+                
+
+                <!-- Existing Image Preview -->
+                @if (Model.VenueId >= 1 && Model.Images != null && Model.Images.Count > 0)
+                {
+                    int i = 0;
+                    foreach(PhotoModel photoModel in Model.Images)
+                    {
+                        <input asp-for="Images[i].PhotoId" hidden value="@photoModel.PhotoId" />
+                        <input asp-for="Images[i].VenueId" hidden value="@photoModel.VenueId" />
+                        <input asp-for="Images[i].Photo" hidden value="@photoModel.Photo" />
+                        i++;
+                    }
+
+                    <div class="mb-3 text-center">
+                        <img src="@Model.Images[0].Photo" class="img-thumbnail" style="max-width: 150px;" />
+                    </div>
+                }
+
+                <!-- Venue Name -->
+                <div class="form-group mb-3">
+                    <label asp-for="Name" class="form-label">Venue Name</label>
+                    <input asp-for="Name" class="form-control" placeholder="Enter venue name" />
+                    <span asp-validation-for="Name" class="text-danger"></span>
+                </div>
+
+                <!-- Image Upload -->
+                <div class="form-group mb-3">
+                    <label class="form-label">Upload Image</label>
+                    <input type="file" name="VenueImage" class="form-control" accept="image/*" />
+                    <div class="mt-2 text-center">
+                        <img id="imagePreview" class="img-thumbnail" style="display: none; max-width: 150px;" />
+                    </div>
+                </div>
+
+                <!-- Location -->
+                <div class="form-group mb-3">
+                    <label asp-for="Location" class="form-label">Location</label>
+                    <input asp-for="Location" class="form-control" placeholder="Enter location" />
+                    <span asp-validation-for="Location" class="text-danger"></span>
+                </div>
+
+                <!-- Location Link -->
+                <div class="form-group mb-3">
+                    <label asp-for="LocationLink" class="form-label">Google Maps Link</label>
+                    <input asp-for="LocationLink" class="form-control" placeholder="Paste location link" />
+                    <span asp-validation-for="LocationLink" class="text-danger"></span>
+                </div>
+
+                <!-- Price Per Hour -->
+                <div class="form-group mb-3">
+                    <label asp-for="PricePerHour" class="form-label">Price Per Hour</label>
+                    <input asp-for="PricePerHour" class="form-control" placeholder="Enter price per hour" />
+                    <span asp-validation-for="PricePerHour" class="text-danger"></span>
+                </div>
+
+                <!-- Description -->
+                <div class="form-group mb-3">
+                    <label asp-for="Description" class="form-label">Description</label>
+                    <textarea asp-for="Description" class="form-control" rows="3" placeholder="Enter description"></textarea>
+                    <span asp-validation-for="Description" class="text-danger"></span>
+                </div>
+
+                <!-- Capacity -->
+                <div class="form-group mb-3">
+                    <label asp-for="Capacity" class="form-label">Capacity</label>
+                    <input asp-for="Capacity" class="form-control" placeholder="Enter capacity" />
+                    <span asp-validation-for="Capacity" class="text-danger"></span>
+                </div>
+
+                <!-- Address -->
+                <div class="form-group mb-3">
+                    <label asp-for="Address" class="form-label">Address</label>
+                    <textarea asp-for="Address" class="form-control" rows="3" placeholder="Enter address"></textarea>
+                    <span asp-validation-for="Address" class="text-danger"></span>
+                </div>
+
+                <!-- City -->
+                <div class="form-group mb-3">
+                    <label asp-for="City" class="form-label">City</label>
+                    <input asp-for="City" class="form-control" placeholder="Enter city" />
+                    <span asp-validation-for="City" class="text-danger"></span>
+                </div>
+
+                <!-- State -->
+                <div class="form-group mb-3">
+                    <label asp-for="State" class="form-label">State</label>
+                    <input asp-for="State" class="form-control" placeholder="Enter state" />
+                    <span asp-validation-for="State" class="text-danger"></span>
+                </div>
+
+                <!-- Action Buttons -->
+                <div class="d-flex justify-content-between">
+                    <button type="submit" class="btn btn-success">Submit</button>
+                    <a class="btn btn-secondary" asp-action="AllVenues">Back</a>
+                </div>
+            </form>
+            <!-- Form End -->
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+
+    <script>
+        document.querySelector('input[name="VenueImage"]').addEventListener('change', function (event) {
+            const preview = document.getElementById('imagePreview');
+            preview.src = URL.createObjectURL(event.target.files[0]);
+            preview.style.display = 'block';
+        });
+    </script>
+}

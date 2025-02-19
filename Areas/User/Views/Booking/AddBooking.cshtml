@@ -1,0 +1,297 @@
+﻿@model BOXCricket.Models.BookingModel
+
+<header id="header" class="header d-flex align-items-center fixed-top bg-black">
+    <div class="container-fluid container-xl position-relative d-flex align-items-center justify-content-between">
+
+        <a href="index.html" class="logo d-flex align-items-center">
+            <!-- Uncomment the line below if you also wish to use an image logo -->
+            <img src="~/UserSide/assets/img/logo.png" alt="">
+            <h1 class="sitename">BOX Cricket</h1>
+        </a>
+
+        <nav id="navmenu" class="navmenu">
+            <ul>
+                <li><a asp-action="Index" asp-controller="Home" asp-area="User">Home</a></li>
+                <li><a asp-action="AllVenues" asp-controller="Venue" asp-area="User">Venues</a></li>
+                <li><a asp-action="BookingsByUser" asp-controller="Booking" asp-area="User" class="active">Bookings</a></li>
+                <li><a asp-action="Payments" asp-controller="Payment" asp-area="User">Payments</a></li>
+                <li><a href="#portfolio">Reviews</a></li>
+                <li class="dropdown">
+                    <a href="#"><i class="bi bi-person-circle fs-4"></i></a>
+                    <ul>
+                        <li><a asp-controller="Home" asp-action="Profile" asp-area="User" class="fs-9">Profile</a></li>
+                        <li><a asp-controller="Auth" asp-action="Logout" asp-area="Authentication" class=" btn btn-get-started">Logout</a></li>
+                    </ul>
+                </li>
+            </ul>
+            <i class="mobile-nav-toggle d-xl-none bi bi-list"></i>
+        </nav>
+
+
+    </div>
+</header>
+
+<script src="https://www.paypal.com/sdk/js?client-id=@(ViewBag.PaypalClientId)&currency=USD"></script>
+
+<main class="main mt-5">
+    <section id="AllVenues">
+
+        <div class="container">
+
+            <div class="row">
+                <!-- Venue Details -->
+                <div class="col-md-6">
+                    <div class="card venue-card">
+                        <div class="card-body">
+                            <h2 class="card-title">🏏 Venue Details</h2>
+                            <hr />
+                            <table class="table table-bordered venue-table">
+                                <tbody>
+                                    <tr>
+                                        <td colspan="2" class="text-center">
+                                            @if (Model.Venue.Images.Count > 0)
+                                            {
+                                                <img src="@Model.Venue.Images[0].Photo" class="img-fluid venue-img" alt="Venue Image">
+                                            }else{
+                                                <h3>No Image</h3>
+                                            }
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <th>Name</th>
+                                        <td>@Model.Venue.Name</td>
+                                    </tr>
+                                    <tr>
+                                        <th>Capacity</th>
+                                        <td>@Model.Venue.Capacity People</td>
+                                    </tr>
+                                    <tr>
+                                        <th>Price Per Hour</th>
+                                        <td>₹@Model.Venue.PricePerHour</td>
+                                    </tr>
+                                    <tr>
+                                        <th>Address</th>
+                                        <td>@Model.Venue.Address</td>
+                                    </tr>
+                                    <tr>
+                                        <th>Link of Location</th>
+                                        <td><a href="@Model.Venue.LocationLink" target="_blank" class="btn btn-secondary">View on Map</a></td>
+                                    </tr>
+                                    
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Booking Details -->
+                <div class="col-md-6">
+                    <div class="card booking-card">
+                        <div class="card-body">
+                            <h2 class="card-title">📅 Booking Details</h2>
+                            <hr/>
+                            <table class="table table-bordered booking-table">
+                                <tbody>
+                                    <tr>
+                                        <th>Booking Date</th>
+                                        <td>@Model.BookingDate.ToString("dd-MM-yyyy")</td>
+                                    </tr>
+                                    <tr>
+                                        <th>Time</th>
+                                        <td>@Model.StartTime.ToString(@"hh\:mm") - @Model.EndTime.ToString(@"hh\:mm")</td>
+                                    </tr>
+                                    <tr>
+                                        <th>Duration</th>
+                                        <td>@((Model.EndTime.TotalMinutes - Model.StartTime.TotalMinutes)) Minutes</td>
+                                    </tr>
+                                    <tr>
+                                        <th>Status</th>
+                                        <td><span class="badge status-badge">@Model.Status</span></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <div class="card payment-card text-center mt-5">
+                        <div class="card-body">
+                            <h2 class="card-title">💳 Make Payment</h2>
+                            <hr />
+                            <p class="fs-4">Total Amount: <strong>₹@(((Model.EndTime.TotalMinutes - Model.StartTime.TotalMinutes) / 60) * Model.Venue.PricePerHour)</strong></p>
+
+                                <div class="form-group">
+                                <input class="form-control" type="number" id="totalAmount" step="0.01" value="@(((Model.EndTime.TotalMinutes - Model.StartTime.TotalMinutes) / 60) * Model.Venue.PricePerHour)" hidden/>
+                                </div>
+                                <br />
+                                <div id="notification-container"></div>
+                                <div id="paypal-button-container"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+        </div>
+
+        
+
+
+    </sectoin>
+</main>
+
+@section Scripts{
+
+
+    <script>
+        paypal.Buttons({
+            async createOrder() {
+                const response = await fetch("@Url.ActionLink("CreateOrder", "Checkout", new { area = "Payment" })", {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json",
+                    },
+                    body: JSON.stringify({
+                        amount: document.getElementById("totalAmount").value
+                    })
+                });
+
+                const order = await response.json();
+                return order.id;
+            },
+
+            async onApprove(data) {
+                // Capture the funds from the transaction.
+                const bookingModel = @Html.Raw(Json.Serialize(Model)); 
+
+                const response = await fetch("@Url.ActionLink("CompleteOrder", "Checkout", new { area = "Payment" })", {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json",
+                    },
+                    body: JSON.stringify({
+                        orderID: data.orderID,
+                        bookingModel: bookingModel
+                    })
+                })
+
+                const details = await response.json();
+
+                // Show success message to buyer
+                if (details == "success") {
+                    document.getElementById("notification-container").innerHTML = `
+                                <div class="alert alert-success alert-dismissible fade show" role="alert">
+                                    <strong>Payment Successful! Your order is confirmed.</strong>
+                                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                                </div>
+                            `;
+
+                    const res = await fetch("@Url.ActionLink("ConfirmBooking", "Booking", new { area = "User" })", {
+                        method: "POST",
+                        headers: {
+                            "Content-Type": "application/json",
+                        },
+                        body: JSON.stringify({
+                            orderID: data.orderID,
+                            bookingModel: bookingModel
+                        })
+                    });
+
+                    window.location.href = "@Url.Action("BookingByVenue", "Booking", new { area = "User", venueId = Model.VenueId })";
+
+
+                } else {
+                    document.getElementById("notification-container").innerHTML = `
+                                <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                                    <strong>Payment failed. Please try again.</strong>
+                                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                                </div>
+                            `;
+                }
+            },
+
+            onCancel(data) {
+                document.getElementById("notification-container").innerHTML = `
+                        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                            <strong>Payment Canceled!</strong>
+                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                        </div>
+                    `;
+            },
+
+            onError(err) {
+                document.getElementById("notification-container").innerHTML = `
+                            <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                                <strong>An error occured! please retry later.</strong>
+                                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                            </div>
+                        `;
+            }
+        }).render('#paypal-button-container');
+    </script>
+
+    <style>
+        
+
+        /* Card Styling */
+        .venue-card, .booking-card, .payment-card {
+            background: #ffffff;
+            border: 1px solid #dee2e6;
+            border-radius: 10px;
+            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+            transition: all 0.3s ease-in-out;
+        }
+
+            /* Hover Effect */
+            .venue-card:hover, .booking-card:hover, .payment-card:hover {
+                transform: translateY(-3px);
+                box-shadow: 0px 6px 15px rgba(0, 0, 0, 0.15);
+            }
+
+        /* Venue Image */
+        .venue-img {
+            width: 100%;
+            height: 250px;
+            object-fit: cover;
+            border-radius: 8px;
+            border: 3px solid var(--text-color);
+        }
+
+        /* Table Styling */
+        .table {
+            background: #ffffff;
+            border-radius: 8px;
+            overflow: hidden;
+        }
+
+        /* Table Header */
+        th {
+            background: var(--primary-color);
+            color: white;
+            text-align: left;
+            padding: 12px;
+        }
+
+        /* Table Cells */
+        td {
+            padding: 12px;
+            color: var(--text-color);
+        }
+
+        /* Alternate Row Background */
+        .table-bordered tbody tr:nth-of-type(odd) {
+            background: #f1f3f5;
+        }
+
+        /* Status Badge */
+        .status-badge {
+            font-size: 1rem;
+            padding: 6px 12px;
+            border-radius: 20px;
+            background: var(--secondary-color);
+            color: white;
+        }
+
+        
+
+    </style>
+}

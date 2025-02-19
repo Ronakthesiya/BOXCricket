@@ -1,0 +1,187 @@
+﻿@model IEnumerable<BOXCricket.Models.PaymentModel>
+
+<header id="header" class="header d-flex align-items-center fixed-top bg-black">
+    <div class="container-fluid container-xl position-relative d-flex align-items-center justify-content-between">
+
+        <a href="index.html" class="logo d-flex align-items-center">
+            <!-- Uncomment the line below if you also wish to use an image logo -->
+            <img src="~/UserSide/assets/img/logo.png" alt="">
+            <h1 class="sitename">BOX Cricket</h1>
+        </a>
+
+        <nav id="navmenu" class="navmenu">
+            <ul>
+                <li><a asp-action="Index" asp-controller="Home" asp-area="User">Home</a></li>
+                <li><a asp-action="AllVenues" asp-controller="Venue" asp-area="User">Venues</a></li>
+                <li><a asp-action="BookingsByUser" asp-controller="Booking" asp-area="User" >Bookings</a></li>
+                <li><a asp-action="Payments" asp-controller="Payment" asp-area="User" class="active">Payments</a></li>
+                <li><a href="#portfolio">Reviews</a></li>
+                <li class="dropdown">
+                    <a href="#"><i class="bi bi-person-circle fs-4"></i></a>
+                    <ul>
+                        <li><a asp-controller="Home" asp-action="Profile" asp-area="User" class="fs-9">Profile</a></li>
+                        <li><a asp-controller="Auth" asp-action="Logout" asp-area="Authentication" class=" btn btn-get-started">Logout</a></li>
+                    </ul>
+                </li>
+            </ul>
+            <i class="mobile-nav-toggle d-xl-none bi bi-list"></i>
+        </nav>
+
+
+    </div>
+</header>
+
+
+<main class="main mt-5">
+    <section id="AllVenues">
+
+        <div class="container">
+            
+
+            <div class="table-responsive">
+                <div id="basic-datatables_wrapper" class="dataTables_wrapper container-fluid dt-bootstrap4">
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <table id="basic-datatables" class="display table table-striped table-hover dataTable" role="grid" aria-describedby="basic-datatables_info">
+                                <thead class="tableheading">
+                                    <tr role="row">
+                                        <th class="th" tabindex="0" aria-controls="basic-datatables" rowspan="1" colspan="1" aria-label="Name: activate to sort column descending" aria-sort="ascending">Paymnet Date</th>
+                                        <th class="th" tabindex="0" aria-controls="basic-datatables" rowspan="1" colspan="1" aria-label="Position: activate to sort column ascending">User Name</th>
+                                        <th class="th" tabindex="0" aria-controls="basic-datatables" rowspan="1" colspan="1" aria-label="Office: activate to sort column ascending">Venue Name</th>
+                                        <th class="th" tabindex="0" aria-controls="basic-datatables" rowspan="1" colspan="1" aria-label="Age: activate to sort column">Payment Method</th>
+                                        <th class="th" tabindex="0" aria-controls="basic-datatables" rowspan="1" colspan="1" aria-label="Age: activate to sort column">Amount Paid</th>
+                                        <th class="th" tabindex="0" aria-controls="basic-datatables" rowspan="1" colspan="1" aria-label="Age: activate to sort column">Transaction Id</th>
+                                    </tr>
+                                </thead>
+
+                                <tbody>
+                                    @foreach (var item in Model)
+                                    {
+                                        <tr role="row" class="odd">
+                                            <td>@item.PaymentDate.ToString("dd-MM-yyyy")</td>
+                                            <td>@item.User?.Name</td>
+                                            <td>@item.Venue?.Name</td>
+                                            <td>@item.PaymentMethod</td>
+                                            <td>₹ @item.AmountPaid</td>
+                                            <td>@item.TransactionId</td>
+                                        </tr>
+                                    }
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        </sectoin>
+</main>
+
+
+@section Scripts {
+    <style>
+        .table {
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+            .table th, .table td {
+                vertical-align: middle !important;
+            }
+
+            .table th {
+                text-transform: uppercase;
+                cursor: pointer;
+            }
+
+        .page-link {
+            color: gray;
+        }
+
+        .paginate_button active {
+            background-color: gray;
+        }
+
+        .status-badge {
+            padding: 5px 10px;
+            border-radius: 5px;
+            font-weight: bold;
+        }
+
+        .status-pending {
+            background-color: #F75D59;
+            color: #fff;
+        }
+
+        .status-success {
+            background-color: #28a745;
+            color: #fff;
+        }
+
+        .tableheading .th {
+            color: white;
+            background-color: #212529;
+        }
+    </style>
+    <script src="~/AdminSide/assets/js/plugin/datatables/datatables.min.js"></script>
+    <link rel="stylesheet" href="~/AdminSide/assets/css/plugins.min.css" />
+    <script>
+        $(document).ready(function () {
+            $("#basic-datatables").DataTable({});
+
+            $("#multi-filter-select").DataTable({
+                pageLength: 5,
+                initComplete: function () {
+                    this.api()
+                        .columns()
+                        .every(function () {
+                            var column = this;
+                            var select = $(
+                                '<select class="form-select"><option value=""></option></select>'
+                            )
+                                .appendTo($(column.footer()).empty())
+                                .on("change", function () {
+                                    var val = $.fn.dataTable.util.escapeRegex($(this).val());
+
+                                    column
+                                        .search(val ? "^" + val + "$" : "", true, false)
+                                        .draw();
+                                });
+
+                            column
+                                .data()
+                                .unique()
+                                .sort()
+                                .each(function (d, j) {
+                                    select.append(
+                                        '<option value="' + d + '">' + d + "</option>"
+                                    );
+                                });
+                        });
+                },
+            });
+
+            // Add Row
+            $("#add-row").DataTable({
+                pageLength: 5,
+            });
+
+            var action =
+                '<td> <div class="form-button-action"> <button type="button" data-bs-toggle="tooltip" title="" class="btn btn-link btn-primary btn-lg" data-original-title="Edit Task"> <i class="fa fa-edit"></i> </button> <button type="button" data-bs-toggle="tooltip" title="" class="btn btn-link btn-danger" data-original-title="Remove"> <i class="fa fa-times"></i> </button> </div> </td>';
+
+            $("#addRowButton").click(function () {
+                $("#add-row")
+                    .dataTable()
+                    .fnAddData([
+                        $("#addName").val(),
+                        $("#addPosition").val(),
+                        $("#addOffice").val(),
+                        action,
+                    ]);
+                $("#addRowModal").modal("hide");
+            });
+        });
+    </script>
+}

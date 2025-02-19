@@ -1,0 +1,56 @@
+﻿<header id="header" class="header d-flex align-items-center fixed-top bg-black">
+    <div class="container-fluid container-xl position-relative d-flex align-items-center justify-content-between">
+
+        <a href="index.html" class="logo d-flex align-items-center">
+            <!-- Uncomment the line below if you also wish to use an image logo -->
+            <img src="~/UserSide/assets/img/logo.png" alt="">
+            <h1 class="sitename">BOX Cricket</h1>
+        </a>
+
+        <nav id="navmenu" class="navmenu">
+            <ul>
+                <li><a asp-action="Index" asp-controller="Home" asp-area="User">Home</a></li>
+                <li><a asp-action="AllVenues" asp-controller="Venue" asp-area="User">Venues</a></li>
+                <li><a asp-action="BookingsByUser" asp-controller="Booking" asp-area="User">Bookings</a></li>
+                <li><a asp-action="Payments" asp-controller="Payment" asp-area="User">Payments</a></li>
+                <li><a href="#portfolio">Reviews</a></li>
+                <li class="dropdown">
+                    <a href="#" class="active"><i class="bi bi-person-circle fs-4"></i></a>
+                    <ul>
+                        <li><a asp-controller="Home" asp-action="Profile" asp-area="User" class="fs-9">Profile</a></li>
+                        <li><a asp-controller="Auth" asp-action="Logout" asp-area="Authentication" class=" btn btn-get-started">Logout</a></li>
+                    </ul>
+                </li>
+            </ul>
+            <i class="mobile-nav-toggle d-xl-none bi bi-list"></i>
+        </nav>
+
+
+    </div>
+</header>
+<main class="main mt-10 px-6">
+    <section id="AllVenues" class="max-w-4xl mx-auto bg-white p-6 rounded-lg shadow-lg fade-in">
+        <h2 class="text-2xl font-bold text-center text-blue-600 mb-4">User Information</h2>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div class="bg-blue-100 p-4 rounded-lg shadow-md">
+                <span class="font-semibold">Username:</span> @Context!.Session.GetString("userName")
+            </div>
+            <div class="bg-blue-100 p-4 rounded-lg shadow-md">
+                <span class="font-semibold">Email:</span> @Context!.Session.GetString("email")
+            </div>
+            <div class="bg-blue-100 p-4 rounded-lg shadow-md">
+                <span class="font-semibold">User ID:</span> @Context!.Session.GetString("userId")
+            </div>
+            <div class="bg-blue-100 p-4 rounded-lg shadow-md">
+                <span class="font-semibold">Role:</span> @Context!.Session.GetString("userRole")
+            </div>
+            <div class="bg-blue-100 p-4 rounded-lg shadow-md col-span-1 md:col-span-2">
+                <span class="font-semibold">ID:</span> @Context!.Session.GetString("id")
+            </div>
+        </div>
+    </section>
+</main>
+
+@section scripts{
+    
+}
