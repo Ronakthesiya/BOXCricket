@@ -1,0 +1,27 @@
+﻿    /* Timeline Layout */
+    
+
+    @keyframes fill-line {
+        from {
+            height: 0;
+        }
+        to {
+            height: 80px;
+        }
+    }
+
+    /* Responsive Adjustments */
+    @media (max-width: 768px) {
+        .timeline-item {
+            flex-direction: column;
+            text-align: center;
+        }
+
+        .timeline-content {
+            text-align: center;
+        }
+
+        .timeline-line {
+            left: 50%;
+        }
+    }

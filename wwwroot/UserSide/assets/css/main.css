@@ -279,24 +279,25 @@ h6 {
     position: relative;
   }
 
-  .navmenu a,
-  .navmenu a:focus {
-    color: var(--nav-color);
-    padding: 18px 15px;
-    font-size: 13px;
-    font-family: var(--nav-font);
-    text-transform: uppercase;
-    font-weight: 500;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    white-space: nowrap;
-    transition: 0.3s;
-  }
+    .navmenu a,
+    .navmenu a:focus {
+        color: var(--nav-color);
+        padding: 18px 15px;
+        font-size: 16px;
+        font-family: var(--nav-font);
+        text-transform: uppercase;
+        font-weight: 500;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        white-space: nowrap;
+        transition: 0.3s;
+    }
+
 
   .navmenu a i,
   .navmenu a:focus i {
-    font-size: 12px;
+    font-size: 16px;
     line-height: 0;
     margin-left: 5px;
     transition: 0.3s;
