@@ -44,5 +44,7 @@ namespace BOXCricket.Models
         public string State { get; set; }
 
         public List<PhotoModel> Images { get; set; }
+
+        public ReviewModel Review { get; set; }
     }
 }

@@ -14,7 +14,6 @@
                 <li><a asp-action="AllVenues" asp-controller="Venue" asp-area="User">Venues</a></li>
                 <li><a asp-action="BookingsByUser" asp-controller="Booking" asp-area="User">Bookings</a></li>
                 <li><a asp-action="Payments" asp-controller="Payment" asp-area="User">Payments</a></li>
-                <li><a href="#portfolio">Reviews</a></li>
                 <li class="dropdown">
                     <a href="#"><i class="bi bi-person-circle fs-4"></i></a>
                     <ul>
@@ -76,6 +75,86 @@
 
     </section><!-- /Hero Section -->
     <!-- About Section -->
+
+    <section id="venues" class="venues section">
+
+        <div class="container" data-aos="fade-up">
+            <div class="row">
+                <div class="text-center">
+                    <h1>Book NOW !</h1>
+                </div>
+
+                <div class="slider-container" id="sliderContainer">
+                    <div class="slider" id="slider" data-aos="fade-left">
+                        @foreach (VenueModel venue in ViewBag.Venues)
+                        {
+                            <div class="card">
+                                <span class="category">Designer</span>
+                                <img src="@venue.Images[0].Photo" alt="Card Image">
+                                <h2>@venue.Name</h2>
+                                <h3>@venue.Description</h3>
+                                <div class="read-more">Read More</div>
+                            </div>
+                        }
+
+                    </div>
+                    <div class="controls">
+                        <button id="prev">&#10094;</button>
+                        <button id="next" class="me-3">&#10095;</button>
+                    </div>
+                </div>
+
+                <div class="text-center m-3 hero">
+                    <button class="btn-get-started border border-0 w-25">Details</button>
+
+                </div>
+            </div>
+
+        </div>
+
+    </section>
+
+    <section id="how-it-works" class="how-it-works section py-5 bg-light">
+        <div class="container text-center">
+            <h2 class="section-title mb-4" data-aos="fade-up">How It Works</h2>
+            <p class="lead" data-aos="fade-up" data-aos-delay="100">Make Booking Simple in Just 3 Easy Steps</p>
+
+            <div class="timeline position-relative">
+                <!-- Step 1 -->
+                <div class="timeline-item d-flex align-items-center" data-aos="fade-right" data-aos-delay="200">
+                    <div class="timeline-icon bg-primary text-white"><i class="bi bi-search"></i></div>
+                    <div class="timeline-content">
+                        <h4>Find Your Venue</h4>
+                        <p>Browse and choose from a variety of venues that match your event needs.</p>
+                    </div>
+                </div>
+
+                <!-- Step 2 -->
+                <div class="timeline-item d-flex align-items-center flex-row-reverse" data-aos="fade-left" data-aos-delay="400">
+                    <div class="timeline-icon bg-success text-white"><i class="bi bi-calendar-check"></i></div>
+                    <div class="timeline-content">
+                        <h4>Book Instantly</h4>
+                        <p>Select your date, check availability, and confirm your booking hassle-free.</p>
+                    </div>
+                </div>
+
+                <!-- Step 3 -->
+                <div class="timeline-item d-flex align-items-center" data-aos="fade-right" data-aos-delay="600">
+                    <div class="timeline-icon bg-warning text-white"><i class="bi bi-emoji-smile"></i></div>
+                    <div class="timeline-content">
+                        <h4>Enjoy Your Event</h4>
+                        <p>Arrive at the venue and enjoy a seamless event experience.</p>
+                    </div>
+                </div>
+
+                <!-- Timeline Line -->
+                <div class="timeline-line"></div>
+            </div>
+        </div>
+    </section>
+
+
+    <!-- About Section -->
     <section id="about" class="about section">
 
         <div class="container">
@@ -133,39 +212,52 @@
 
                 <div class="col-lg-3 col-md-6">
                     <div class="stats-item">
-                        <i class="bi bi-emoji-smile"></i>
-                        <span data-purecounter-start="0" data-purecounter-end="232" data-purecounter-duration="1" class="purecounter"></span>
-                        <p><strong>Happy Clients</strong> <span>consequuntur quae</span></p>
+                        <i class="bi bi-people"></i>
+                        <div class="d-flex">
+                            <div data-purecounter-start="0" data-purecounter-end="1500" data-purecounter-duration="1" class="purecounter"></div>
+                            <div class="fw-bolder fs-1 align-text-top" style="position:relative; top:-10px;">+</div>
+                        </div>
+                        <p><strong>Players Registered</strong> <span>Join our growing community</span></p>
                     </div>
                 </div><!-- End Stats Item -->
 
                 <div class="col-lg-3 col-md-6">
                     <div class="stats-item">
                         <i class="bi bi-journal-richtext"></i>
-                        <span data-purecounter-start="0" data-purecounter-end="521" data-purecounter-duration="1" class="purecounter"></span>
-                        <p><strong>Projects</strong> <span>adipisci atque cum quia aut</span></p>
+                        <div class="d-flex">
+                            <div data-purecounter-start="0" data-purecounter-end="50" data-purecounter-duration="1" class="purecounter"></div>
+                            <div class="fw-bolder fs-1 align-text-top" style="position:relative; top:-10px;">+</div>
+                        </div>
+                        <p><strong>Venues Available</strong> <span>Play at top-class locations</span></p>
                     </div>
                 </div><!-- End Stats Item -->
 
                 <div class="col-lg-3 col-md-6">
                     <div class="stats-item">
-                        <i class="bi bi-headset"></i>
-                        <span data-purecounter-start="0" data-purecounter-end="1453" data-purecounter-duration="1" class="purecounter"></span>
-                        <p><strong>Hours Of Support</strong> <span>aut commodi quaerat</span></p>
+                        <i class="bi bi-clock-history"></i>
+                        <div class="d-flex">
+                            <div data-purecounter-start="0" data-purecounter-end="1000" data-purecounter-duration="1" class="purecounter"></div>
+                            <div class="fw-bolder fs-1 align-text-top" style="position:relative; top:-10px;">+</div>
+                        </div>
+                        <p><strong>Hours of Play</strong> <span>Enjoy non-stop cricket action</span></p>
                     </div>
                 </div><!-- End Stats Item -->
 
                 <div class="col-lg-3 col-md-6">
                     <div class="stats-item">
-                        <i class="bi bi-people"></i>
-                        <span data-purecounter-start="0" data-purecounter-end="32" data-purecounter-duration="1" class="purecounter"></span>
-                        <p><strong>Hard Workers</strong> <span>rerum asperiores dolor</span></p>
+                        <i class="bi bi-trophy"></i>
+                        <div class="d-flex">
+                            <div data-purecounter-start="0" data-purecounter-end="200" data-purecounter-duration="1" class="purecounter"></div>
+                            <div class="fw-bolder fs-1 align-text-top" style="position:relative; top:-10px;">+</div>
+                        </div>
+                        <p><strong>Tournaments Hosted</strong> <span>Competitive and fun events</span></p>
                     </div>
                 </div><!-- End Stats Item -->
 
             </div>
 
         </div>
+
 
     </section><!-- /Stats Section -->
     <!-- Services Section -->
@@ -174,7 +266,7 @@
         <!-- Section Title -->
         <div class="container section-title" data-aos="fade-up">
             <h2>Services</h2>
-            <div><span>Check Our</span> <span class="description-title">Services</span></div>
+            <div><span>Explore Our</span> <span class="description-title">Offerings</span></div>
         </div><!-- End Section Title -->
 
         <div class="container">
@@ -182,56 +274,56 @@
             <div class="row gy-4">
 
                 <div class="col-lg-4 col-md-6 service-item d-flex" data-aos="fade-up" data-aos-delay="100">
-                    <div class="icon flex-shrink-0"><i class="bi bi-briefcase"></i></div>
+                    <div class="icon flex-shrink-0"><i class="bi bi-calendar-check"></i></div>
                     <div>
-                        <h4 class="title">Lorem Ipsum</h4>
-                        <p class="description">Voluptatum deleniti atque corrupti quos dolores et quas molestias excepturi sint occaecati cupiditate non provident</p>
+                        <h4 class="title">Easy Online Booking</h4>
+                        <p class="description">Book your favorite cricket venue with just a few clicks. Hassle-free and instant confirmation.</p>
                         <a href="service-details.html" class="readmore stretched-link"><span>Learn More</span><i class="bi bi-arrow-right"></i></a>
                     </div>
                 </div>
                 <!-- End Service Item -->
 
                 <div class="col-lg-4 col-md-6 service-item d-flex" data-aos="fade-up" data-aos-delay="200">
-                    <div class="icon flex-shrink-0"><i class="bi bi-card-checklist"></i></div>
+                    <div class="icon flex-shrink-0"><i class="bi bi-trophy"></i></div>
                     <div>
-                        <h4 class="title">Dolor Sitema</h4>
-                        <p class="description">Minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat tarad limino ata</p>
+                        <h4 class="title">Tournaments & Leagues</h4>
+                        <p class="description">Participate in exciting cricket tournaments and leagues, win prizes, and showcase your skills.</p>
                         <a href="service-details.html" class="readmore stretched-link"><span>Learn More</span><i class="bi bi-arrow-right"></i></a>
                     </div>
                 </div><!-- End Service Item -->
 
                 <div class="col-lg-4 col-md-6 service-item d-flex" data-aos="fade-up" data-aos-delay="300">
-                    <div class="icon flex-shrink-0"><i class="bi bi-bar-chart"></i></div>
+                    <div class="icon flex-shrink-0"><i class="bi bi-people"></i></div>
                     <div>
-                        <h4 class="title">Sed ut perspiciatis</h4>
-                        <p class="description">Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur</p>
+                        <h4 class="title">Team Management</h4>
+                        <p class="description">Create or join teams, manage player stats, and schedule matches with ease.</p>
                         <a href="service-details.html" class="readmore stretched-link"><span>Learn More</span><i class="bi bi-arrow-right"></i></a>
                     </div>
                 </div><!-- End Service Item -->
 
                 <div class="col-lg-4 col-md-6 service-item d-flex" data-aos="fade-up" data-aos-delay="400">
-                    <div class="icon flex-shrink-0"><i class="bi bi-binoculars"></i></div>
+                    <div class="icon flex-shrink-0"><i class="bi bi-credit-card"></i></div>
                     <div>
-                        <h4 class="title">Magni Dolores</h4>
-                        <p class="description">Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum</p>
+                        <h4 class="title">Secure Payments</h4>
+                        <p class="description">Pay securely for your bookings and tournaments with multiple payment options available.</p>
                         <a href="service-details.html" class="readmore stretched-link"><span>Learn More</span><i class="bi bi-arrow-right"></i></a>
                     </div>
                 </div><!-- End Service Item -->
 
                 <div class="col-lg-4 col-md-6 service-item d-flex" data-aos="fade-up" data-aos-delay="500">
-                    <div class="icon flex-shrink-0"><i class="bi bi-brightness-high"></i></div>
+                    <div class="icon flex-shrink-0"><i class="bi bi-map"></i></div>
                     <div>
-                        <h4 class="title">Nemo Enim</h4>
-                        <p class="description">At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum deleniti atque</p>
+                        <h4 class="title">Multiple Venues</h4>
+                        <p class="description">Choose from a variety of box cricket venues across different locations, all with great facilities.</p>
                         <a href="service-details.html" class="readmore stretched-link"><span>Learn More</span><i class="bi bi-arrow-right"></i></a>
                     </div>
                 </div><!-- End Service Item -->
 
                 <div class="col-lg-4 col-md-6 service-item d-flex" data-aos="fade-up" data-aos-delay="600">
-                    <div class="icon flex-shrink-0"><i class="bi bi-calendar4-week"></i></div>
+                    <div class="icon flex-shrink-0"><i class="bi bi-clock-history"></i></div>
                     <div>
-                        <h4 class="title">Eiusmod Tempor</h4>
-                        <p class="description">Et harum quidem rerum facilis est et expedita distinctio. Nam libero tempore, cum soluta nobis est eligendi</p>
+                        <h4 class="title">24/7 Customer Support</h4>
+                        <p class="description">Our support team is available round the clock to assist with your queries and bookings.</p>
                         <a href="service-details.html" class="readmore stretched-link"><span>Learn More</span><i class="bi bi-arrow-right"></i></a>
                     </div>
                 </div><!-- End Service Item -->
@@ -242,31 +334,31 @@
 
     </section><!-- /Services Section -->
     <!-- Call To Action Section -->
+    <!-- Call To Action Section -->
     <section id="call-to-action" class="call-to-action section dark-background">
 
-        <img src="~/UserSide/assets/img/cta-bg.jpg" alt="">
+        <img src="~/UserSide/assets/img/hero-carousel/GroundImage.jpg" alt="">
 
         <div class="container">
             <div class="row justify-content-center" data-aos="zoom-in" data-aos-delay="100">
                 <div class="col-xl-10">
                     <div class="text-center">
-                        <h3>Call To Action</h3>
-                        <p>Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
-                        <a class="cta-btn" href="#">Call To Action</a>
+                        <h3>Book Your Game Now!</h3>
+                        <p>Ready to hit the pitch? Book your Box Cricket slot today and enjoy an exciting match with friends. Limited slots available, so hurry up!</p>
+                        <a class="cta-btn" href="#">Book Now</a>
                     </div>
                 </div>
             </div>
         </div>
 
     </section><!-- /Call To Action Section -->
-    <!-- Portfolio Section -->
     <!-- Contact Section -->
     <section id="contact" class="contact section">
 
         <!-- Section Title -->
         <div class="container section-title" data-aos="fade-up">
             <h2>Contact</h2>
-            <div><span>Need Help?</span> <span class="description-title">Contact Us</span></div>
+            <div><span>Need Assistance?</span> <span class="description-title">Get in Touch</span></div>
         </div><!-- End Section Title -->
 
         <div class="container" data-aos="fade-up" data-aos-delay="100">
@@ -279,9 +371,9 @@
                         <div class="col-md-6">
                             <div class="info-item" data-aos="fade" data-aos-delay="200">
                                 <i class="bi bi-geo-alt"></i>
-                                <h3>Address</h3>
-                                <p>A108 Adam Street</p>
-                                <p>New York, NY 535022</p>
+                                <h3>Our Location</h3>
+                                <p>123 Cricket Avenue</p>
+                                <p>Ahmedabad, Gujarat 380001</p>
                             </div>
                         </div><!-- End Info Item -->
 
@@ -289,8 +381,8 @@
                             <div class="info-item" data-aos="fade" data-aos-delay="300">
                                 <i class="bi bi-telephone"></i>
                                 <h3>Call Us</h3>
-                                <p>+1 5589 55488 55</p>
-                                <p>+1 6678 254445 41</p>
+                                <p>+91 98765 43210</p>
+                                <p>+91 87654 32109</p>
                             </div>
                         </div><!-- End Info Item -->
 
@@ -298,17 +390,17 @@
                             <div class="info-item" data-aos="fade" data-aos-delay="400">
                                 <i class="bi bi-envelope"></i>
                                 <h3>Email Us</h3>
-                                <p>info@example.com</p>
-                                <p>contact@example.com</p>
+                                <p>support@boxcricket.com</p>
+                                <p>info@boxcricket.com</p>
                             </div>
                         </div><!-- End Info Item -->
 
                         <div class="col-md-6">
                             <div class="info-item" data-aos="fade" data-aos-delay="500">
                                 <i class="bi bi-clock"></i>
-                                <h3>Open Hours</h3>
-                                <p>Monday - Friday</p>
-                                <p>9:00AM - 05:00PM</p>
+                                <h3>Operating Hours</h3>
+                                <p>Monday - Sunday</p>
+                                <p>6:00 AM - 11:00 PM</p>
                             </div>
                         </div><!-- End Info Item -->
 
@@ -353,5 +445,222 @@
         </div>
 
     </section><!-- /Contact Section -->
-
 </main>
+
+
+
+    @section scripts {
+        <script>
+            const slider = document.getElementById('slider');
+            const nextBtn = document.getElementById('next');
+            const prevBtn = document.getElementById('prev');
+            const sliderContainer = document.getElementById('sliderContainer');
+            let index = 0;
+            let autoSlide;
+
+            function slide(direction) {
+                const cards = document.querySelectorAll('.card');
+                const cardWidth = cards[0].offsetWidth + 20;
+                if (direction === 'next') {
+                    index = (index + 1) % (cards.length - 2);
+                } else {
+                    index = (index - 1 + cards.length) % cards.length;
+                }
+                slider.style.transform = `translateX(${-index * cardWidth}px)`;
+            }
+
+            function startAutoSlide() {
+                autoSlide = setInterval(() => slide('next'), 2000);
+            }
+
+            function stopAutoSlide() {
+                console.log("Stop")
+                clearInterval(autoSlide);
+            }
+
+            nextBtn.addEventListener('click', () => {
+                slide('next');
+                stopAutoSlide();
+                startAutoSlide();
+            });
+            prevBtn.addEventListener('click', () => {
+                slide('prev');
+                stopAutoSlide();
+                startAutoSlide();
+            });
+
+            sliderContainer.addEventListener('mouseenter', stopAutoSlide);
+            sliderContainer.addEventListener('mouseleave', startAutoSlide);
+
+            startAutoSlide();
+        </script>
+
+        @* for venues *@
+        <style>
+
+            .slider-container {
+                width: 100%;
+                overflow: hidden;
+                position: relative;
+            }
+
+            .slider {
+                display: flex;
+                transition: transform 0.5s ease-in-out;
+            }
+
+            .card {
+                min-width: 350px;
+                margin: 15px;
+                padding: 15px;
+                background: white;
+                box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+                border-radius: 12px;
+                text-align: left;
+                position: relative;
+                transition: transform 0.3s ease, box-shadow 0.3s ease;
+            }
+
+                .card:hover {
+                    transform: translateY(-10px);
+                    box-shadow: 0 12px 24px rgba(0, 0, 0, 0.2);
+                }
+
+                .card img {
+                    width: 100%;
+                    height: 250px;
+                    object-fit: cover;
+                    border-radius: 10px;
+                }
+
+            .category {
+                position: absolute;
+                top: 15px;
+                left: 15px;
+                background: rgba(0, 0, 255, 0.1);
+                color: #0033cc;
+                padding: 5px 12px;
+                border-radius: 15px;
+                font-size: 12px;
+                font-weight: bold;
+            }
+
+            .card h3 {
+                margin: 0px 0 10px;
+                font-size: 18px;
+                display: -webkit-box;
+                -webkit-line-clamp: 2; /* Limit to 3 lines */
+                -webkit-box-orient: vertical;
+                overflow: hidden;
+                text-overflow: ellipsis;
+                max-height: 4.5em; /* Adjust based on font size */
+                line-height: 2.0em; /* Ensures 3 lines */
+            }
+
+            .card h2 {
+                margin: 13px 0 10px;
+            }
+
+            .read-more {
+                display: flex;
+                align-items: center;
+                gap: 5px;
+                font-size: 14px;
+                color: #0033cc;
+                font-weight: bold;
+                cursor: pointer;
+                transition: color 0.3s;
+            }
+
+                .read-more:hover {
+                    color: #ff6600;
+                }
+
+            .controls {
+                position: absolute;
+                top: 50%;
+                width: 100%;
+                display: flex;
+                justify-content: space-between;
+                transform: translateY(-50%);
+            }
+
+                .controls button {
+                    background: rgba(0, 0, 0, 0.2);
+                    color: white;
+                    border: none;
+                    padding: 10px 15px;
+                    cursor: pointer;
+                    border-radius: 50%;
+                    transition: background 0.3s;
+                }
+
+                    .controls button:hover {
+                        background: rgba(0, 0, 0, 0.4);
+                    }
+
+        </style>
+
+        <style>
+            .timeline {
+                position: relative;
+                padding: 40px 0;
+                max-width: 800px;
+                margin: auto;
+            }
+
+            .timeline-item {
+                position: relative;
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+                margin-bottom: 40px;
+            }
+
+                .timeline-item:nth-child(even) {
+                    flex-direction: row-reverse;
+                }
+
+            .timeline-content {
+                width: 60%;
+            }
+
+            /* Icons */
+            .timeline-icon {
+                width: 60px;
+                height: 60px;
+                border-radius: 50%;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                font-size: 1.5rem;
+                font-weight: bold;
+                position: relative;
+                z-index: 2;
+            }
+
+            /* Path Lines */
+            .timeline-line {
+                position: absolute;
+                width: 4px;
+                background: #ddd;
+                top: 50%;
+                left: 50%;
+                transform: translateX(-50%);
+                z-index: 1;
+                transition: height 1s ease-in-out;
+            }
+
+            .line-1 {
+                height: 0;
+                animation: fill-line 1s ease-out forwards 0.5s;
+            }
+
+            .line-2 {
+                height: 0;
+                animation: fill-line 1s ease-out forwards 1.5s;
+            }
+        </style>
+
+    }
+

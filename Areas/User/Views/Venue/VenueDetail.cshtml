@@ -15,7 +15,6 @@
                 <li><a asp-action="AllVenues" asp-controller="Venue" asp-area="User" class="active">Venues</a></li>
                 <li><a asp-action="BookingsByUser" asp-controller="Booking" asp-area="User">Bookings</a></li>
                 <li><a asp-action="Payments" asp-controller="Payment" asp-area="User">Payments</a></li>
-                <li><a href="#portfolio">Reviews</a></li>
                 <li class="dropdown">
                     <a href="#"><i class="bi bi-person-circle fs-4"></i></a>
                     <ul>
@@ -39,6 +38,28 @@
             <h1>@Html.DisplayFor(model => model.Name)</h1>
             <div class="row align-items-center venue-details">
                 <!-- Left Side: Details as Table -->
+                <div class="col-md-6">
+                    <div class="text-center mb-4">
+                    @if (Model.Images != null && Model.Images.Count > 0)
+                    {
+                        <img src="@Model.Images[0].Photo" alt="Venue Image" class="img-fluid venue-image" />
+                    }
+                    else
+                    {
+                        <span>No Image Available</span>
+                    }
+                    </div>
+                    <div>
+                        <div class="text-center mt-4 d-flex justify-content-center gap-3">
+                            <a asp-action="BookingByVenue" asp-controller="Booking" asp-route-venueId="@Model.VenueId" class="btn btn-primary d-flex align-items-center gap-2 px-4 py-2 shadow">
+                                <i class="bi bi-calendar-check"></i> See Booking
+                            </a>
+                            <a class="btn btn-secondary d-flex align-items-center gap-2 px-4 py-2 shadow" asp-action="AllVenues">
+                                <i class="bi bi-arrow-left"></i> Back
+                            </a>
+                        </div>
+                    </div>
+                </div>
                 <div class="col-md-6">
                     <table class="table table-bordered details-table">
                         <thead>
@@ -86,29 +107,38 @@
                             </tr>
                         </tbody>
                     </table>
+                    
                 </div>
 
-                <!-- Right Side: Image -->
-                <div class="col-md-6 text-center">
-                    @if (Model.Images != null && Model.Images.Count > 0)
-                    {
-                        <img src="@Model.Images[0].Photo" alt="Venue Image" class="img-fluid venue-image" />
-                    }
-                    else
-                    {
-                        <span>No Image Available</span>
-                    }
+                <!-- Right Side: Chat box -->
+                 @* <div class="col-md-6">
+                     <div class="bg-secondary text-center py-3 rounded-top"">
+                         <h2 class="text-white font-weight-bold">Reviews</h2>
+                     </div>
+                     <div class="chat-container bg-light p-4 rounded-bottom shadow-lg" style="min-height: 500px; max-height: 500px; overflow-y: auto; border: 1px solid #ccc; word-wrap: break-word;">
+                         <div class="mb-3">
+                             <div class="d-flex bg-primary text-white p-3 rounded-4 w-auto d-inline-block shadow-sm" style="word-break: break-word; max-width: 80%;">
+                                 <div class="bg-danger me-2 text-center" style="height:40px; width:45px; border-radius:100%;">RT</div>
+                                 <div>asdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfsdfasdfasdfasdfsdfasfasd</div>
+                             </div>
+                         </div>
+                         <div class="d-flex justify-content-end mb-3">
+                             <div class="bg-success text-white p-3 rounded-4 w-auto d-inline-block shadow-sm" style="word-break: break-word; max-width: 80%;">
+                                 asdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfsdfasdfasdfasdfsdfasfasdasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfsdfasdfasdfasdfsdfasfasd
+                             </div>
+                         </div>
+                     </div>
 
-                    <div class="text-center mt-4">
-                        <a asp-action="BookingByVenue" asp-controller="Booking" asp-route-venueId="@Model.VenueId" class="btn btn-primary">
-                            <i class="bi bi-calendar-check"></i> See Booking
-                        </a>
-                            
-                        <a class="btn btn-secondary" asp-action="AllVenues">
-                            <i class="bi bi-arrow-left"></i> Back
-                        </a>
-                    </div>
-                </div>
+                     <div class="text-center mt-4 d-flex justify-content-center gap-3">
+                         <a asp-action="BookingByVenue" asp-controller="Booking" asp-route-venueId="@Model.VenueId" class="btn btn-primary d-flex align-items-center gap-2 px-4 py-2 shadow">
+                             <i class="bi bi-calendar-check"></i> See Booking
+                         </a>
+                         <a class="btn btn-secondary d-flex align-items-center gap-2 px-4 py-2 shadow" asp-action="AllVenues">
+                             <i class="bi bi-arrow-left"></i> Back
+                         </a>
+                     </div>
+                 </div> *@
+
             </div>
 
             
@@ -120,6 +150,7 @@
 </main>
 
 @section scripts {
+
      <style>
      /* General Styling for Section */
      #AllVenues {
@@ -186,9 +217,9 @@
      
 
         .venue-image {
-            width: 100%; /* Make the image responsive to its container */
+            width: auto; /* Make the image responsive to its container */
             max-width: 500px; /* Limit the maximum width */
-            height: auto; /* Maintain aspect ratio */
+            height: 300px; /* Maintain aspect ratio */
             border-radius: 12px; /* Rounded corners for a polished look */
             box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15); /* Add shadow for depth */
             transition: transform 0.3s ease, box-shadow 0.3s ease; /* Smooth hover effect */
@@ -265,7 +296,35 @@
              padding: 0.6rem 1.4rem;
          }
      } */
+
+       
  </style>
+
+
+      @*Chat box*@
+
+    <style>
+        .chat-container::-webkit-scrollbar {
+            width: 6px;
+        }
+
+        .chat-container::-webkit-scrollbar-thumb {
+            background-color: rgba(0, 0, 0, 0.2);
+            border-radius: 10px;
+        }
+
+        .chat-container::-webkit-scrollbar-track {
+            background: #f1f1f1;
+        }
+
+        .btn {
+            transition: all 0.3s ease-in-out;
+        }
+
+            .btn:hover {
+                transform: scale(1.05);
+            }
+    </style>
 
 
 }

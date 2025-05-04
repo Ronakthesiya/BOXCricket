@@ -17,7 +17,6 @@
                 <li><a asp-action="AllVenues" asp-controller="Venue" asp-area="User" class="active">Venues</a></li>
                 <li><a asp-action="BookingsByUser" asp-controller="Booking" asp-area="User" >Bookings</a></li>
                 <li><a asp-action="Payments" asp-controller="Payment" asp-area="User">Payments</a></li>
-                <li><a href="#portfolio">Reviews</a></li>
                 <li class="dropdown">
                     <a href="#"><i class="bi bi-person-circle fs-4"></i></a>
                     <ul>
@@ -96,43 +95,8 @@
             }
             else
             {
-                <table class="table text-center">
-                    <thead>
-                        <tr>
-                            <th>@Html.DisplayNameFor(model => model.BookingDate)</th>
 
-                            <th>@Html.DisplayNameFor(model => model.User.Name)</th>
-                            <th>@Html.DisplayNameFor(model => model.StartTime)</th>
-                            <th>@Html.DisplayNameFor(model => model.EndTime)</th>
-                            <th>@Html.DisplayNameFor(model => model.TotalAmount)</th>
-                            <th>@Html.DisplayNameFor(model => model.Status)</th>
-                            <th>@Html.DisplayNameFor(model => model.CreatedAt)</th>
-                            <th></th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @foreach (var item in Model)
-                        {
-                            <tr>
-
-                                <td>@item.BookingDate.ToString("dd-MM-yyyy")</td>
-
-                                <td>@item.User?.Name</td>
-                                <td>
-                                    @item.StartTime.ToString(@"hh\:mm")
-                                </td>
-                                <td> @item.EndTime.ToString(@"hh\:mm")</td>
-                                <td>@Html.DisplayFor(modelItem => item.TotalAmount)</td>
-                                <td>@Html.DisplayFor(modelItem => item.Status)</td>
-                                <td>@item.CreatedAt.ToString("g")</td>
-                                <td></td>
-                            </tr>
-                        }
-                    </tbody>
-                </table>
-
-
-                @* <div class="table-responsive mt-5">
+                <div class="table-responsive mt-5">
                     <div id="basic-datatables_wrapper" class="dataTables_wrapper container-fluid dt-bootstrap4">
                         <div class="row">
                             <div class="col-sm-12">
@@ -145,7 +109,7 @@
                                             <th class="" tabindex="0" aria-controls="basic-datatables" rowspan="1" colspan="1" aria-label="Age: activate to sort column">Time</th>
                                             <th class="" tabindex="0" aria-controls="basic-datatables" rowspan="1" colspan="1" aria-label="Age: activate to sort column">@Html.DisplayNameFor(model => model.TotalAmount)</th>
                                             <th class="" tabindex="0" aria-controls="basic-datatables" rowspan="1" colspan="1" aria-label="Age: activate to sort column">@Html.DisplayNameFor(model => model.Status)</th>
-                                            <th class="" tabindex="0" aria-controls="basic-datatables" rowspan="1" colspan="1" aria-label="Age: activate to sort column" style="width: 101.0374px;">@Html.DisplayNameFor(model => model.CreatedAt)</th>
+                                            <th class="" tabindex="0" aria-controls="basic-datatables" rowspan="1" colspan="1" aria-label="Age: activate to sort column">@Html.DisplayNameFor(model => model.CreatedAt)</th>
                                     </thead>
 
                                     <tbody>
@@ -169,7 +133,7 @@
                             </div>
                         </div>
                     </div>
-                </div> *@
+                </div> 
             }
             
         </div>
@@ -628,6 +592,18 @@
             transform: translateX(-50%);
             z-index: 1;
         }
+
+
+        .dataTables_filter {
+            display: flex;
+            justify-content: end;
+        }
+
+        #basic-datatables_paginate{
+            display: flex;
+            justify-content: end;
+        }
+
     </style>
 
     @* <script>
